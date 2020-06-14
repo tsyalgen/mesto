@@ -1,0 +1,15 @@
+@import url('./__text/footer__text.css');
+
+.footer {
+    width: 74%;
+    margin: 0 auto;
+    padding-bottom: 60px;
+}
+
+@media screen and (max-width: 480px) {
+    .footer {
+        padding-bottom: 36px;
+        padding-left: 19px;
+        width: 95%;
+    }
+}
