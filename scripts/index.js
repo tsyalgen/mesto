@@ -1,6 +1,7 @@
 const page = document.querySelector('.page');
 const profileEditButton = page.querySelector('.profile__edit-button');
 const popup = page.querySelector('.popup');
+const popupOverlay = popup.querySelector('.popup__overlay');
 const popupCloseButton = popup.querySelector('.popup__close-button');
 const profileName = page.querySelector('.profile__name');
 const profileDescription = page.querySelector('.profile__description');
@@ -32,17 +33,4 @@ function formSubmitHandler (event) {
 profileEditButton.addEventListener('click', popupToggle);
 popupCloseButton.addEventListener('click', popupToggle);
 popupForm.addEventListener('submit', formSubmitHandler);
-
-
-/* //close popup by clicking overlay :( :( :(
-const popupOverlay = popup.querySelector('.popup__overlay');
-
-function closePopupAlt (event) {
-  if (event.target !== event.currentTarget) {
-    return
-  }
-  popupToggle()
-}
-
-popupOverlay.addEventListener('click', closePopupAlt);
-*/
+popupOverlay.addEventListener('click', popupToggle);
