@@ -1,5 +1,4 @@
 @import url('./__logo/header__logo.css');
-@import url('./__line/header__line.css');
 
 .header {
     display: flex;
@@ -9,7 +8,7 @@
     align-items: flex-start;
     margin: 0 auto;
     padding-top: 45px;
-    padding-bottom: 37px;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
 
 @media screen and (max-width: 480px) {

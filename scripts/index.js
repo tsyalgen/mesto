@@ -6,39 +6,40 @@ const popupCloseButton = popup.querySelector('.popup__close-button');
 const profileName = page.querySelector('.profile__name');
 const profileDescription = page.querySelector('.profile__description');
 const popupForm = popup.querySelector('.popup__form');
+let nameInput = popupForm.querySelector('.popup__field_type_name');
+let descriptionInput = popupForm.querySelector('.popup__field_type_description');
 
 function popupToggle(event) {
   popup.classList.toggle('popup_opened');
+
+  if (popup.classList.contains('popup_opened')) {
+    nameInput.value = profileName.textContent;
+    descriptionInput.value = profileDescription.textContent;
+  }
 }
 
-// close popup by clicking overlay
-function closePopupAlt (event) {
+// close popup by clicking overlay :( :( :(
+/*function closePopupAlt (event) {
   if (event.target !== event.currentTarget) {
     return
   }
   popupToggle()
-}
+}*/
 
 // profile submitter
-function formSubmitHandler (evt) {
-  evt.preventDefault();
+function formSubmitHandler (event) {
+  event.preventDefault();
 
-  let nameInput = popupForm.querySelector('.popup__field_type_name').value;
-  let descriptionInput = popupForm.querySelector('.popup__field_type_description').value;
-
-  profileName.textContent = nameInput;
-  profileDescription.textContent = descriptionInput;
+  profileName.textContent = nameInput.value;
+  profileDescription.textContent = descriptionInput.value;
 
   popupToggle();
 }
 
-// assignment popup inputs from profile block
-popup.querySelector('.popup__field_type_name').value = profileName.textContent;
-popup.querySelector('.popup__field_type_description').value = profileDescription.textContent;
-
 //listeners
 profileEditButton.addEventListener('click', popupToggle);
 popupCloseButton.addEventListener('click', popupToggle);
-popupOverlay.addEventListener('click', closePopupAlt);
 popupForm.addEventListener('submit', formSubmitHandler);
+//popupOverlay.addEventListener('click', closePopupAlt); :(
+
 
