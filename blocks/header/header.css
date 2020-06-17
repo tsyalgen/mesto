@@ -2,6 +2,7 @@
 
 .header {
     display: flex;
+    max-width: 882px;
     width: 74%;
     flex-direction: column;
     justify-content: start;
