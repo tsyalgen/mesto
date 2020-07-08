@@ -40,6 +40,7 @@ function deleteCardHandler(event) {
 
 function openImageHandler(event) {
   photoImage.src = event.currentTarget.src;
+  photoImage.alt = event.currentTarget.alt;
   photoName.textContent = event.currentTarget.alt; //я понял, что Вы имели ввиду и у меня получилось сделать по Вашей рекомендации, но кажется, с появлением alt, я нашел более простое решение :D
 
   popupToggle(popupPhoto);
