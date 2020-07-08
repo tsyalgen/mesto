@@ -40,7 +40,7 @@ function deleteCardHandler(event) {
 
 function openImageHandler(event) {
   photoImage.src = event.currentTarget.src;
-  photoName.textContent = event.currentTarget.nextElementSibling.querySelector('.element__name').textContent;
+  photoName.textContent = event.currentTarget.alt; //я понял, что Вы имели ввиду и у меня получилось сделать по Вашей рекомендации, но кажется, с появлением alt, я нашел более простое решение :D
 
   popupToggle(popupPhoto);
 }
@@ -52,6 +52,7 @@ function createCard (card) {
 
   cardElement.querySelector('.element__name').textContent = card.name;
   cardElement.querySelector('.element__image').src = card.link;
+  cardElement.querySelector('.element__image').alt = card.name;
   cardElement.querySelector('.element__like-button').addEventListener('click', likeButtonHandler);
   cardElement.querySelector('.element__trashbin').addEventListener('click', deleteCardHandler);
   cardElement.querySelector('.element__image').addEventListener('click', openImageHandler);
@@ -69,7 +70,7 @@ renderCards(initialCards);
 
 
 // profile handlers
-function profileToggleHandler (event) {
+function profileToggleHandler () {
   popupToggle(popupProfile);
 
   if (popupProfile.classList.contains('popup_opened')) {
@@ -88,16 +89,17 @@ function profileFormSubmitHandler (event) {
 }
 
 //cards handlers
-function addCardToggleHandler (event) {
+function addCardToggleHandler () {
   popupToggle(popupAddCard);
 }
 
 function addCardFormSubmitHandler (event) {
   event.preventDefault();
 
-  let card = {};
-  card.name = cardNameInput.value;
-  card.link = linkInput.value;
+  const card = {
+    name: cardNameInput.value,
+    link: linkInput.value
+  };
 
   cards.prepend(createCard(card));
 
@@ -109,7 +111,7 @@ function addCardFormSubmitHandler (event) {
 
 // photo popup handlers
 
-function closeImageHandler(event) {
+function closeImageHandler() {
   popupToggle(popupPhoto);
 }
 
