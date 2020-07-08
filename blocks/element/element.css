@@ -2,8 +2,10 @@
 @import url('./__string/element__string.css');
 @import url('./__name/element__name.css');
 @import url('./__like-buttom/element__like-button.css');
+@import url('./__trashbin/element__trashbin.css');
 
 .element {
+  position: relative;
     display: flex;
     flex-direction: column;
     border-radius: 10px;

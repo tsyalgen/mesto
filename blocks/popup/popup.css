@@ -4,12 +4,18 @@
 @import url('./__field/popup__field.css');
 @import url('./__save-button/popup__save-button.css');
 @import url('./__close-button/popup__close-button.css');
+@import url('./__container/popup__container.css');
+@import url('./__image/popup__image.css');
+@import url('./__name/popup__name.css');
 
 .popup {
-    display: none;
+    display: flex;
+    visibility: hidden;
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
+    opacity: 0;
+    transition: visibility 0.4s, opacity 0.4s ease-out;
 }
