@@ -22,34 +22,31 @@ let linkInput = popupAddCardForm.querySelector('.popup__field_type_link');
 let photoImage = popupPhoto.querySelector('.popup__image');
 let photoName = popupPhoto.querySelector('.popup__name');
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 
-function addCard (card) {
+// toggle all popups
+function popupToggle(currentPopup) {
+  currentPopup.classList.toggle('popup_opened');
+}
+
+//functions for cardElement listeners
+function likeButtonHandler(event){
+  event.currentTarget.classList.toggle('element__like-button_active');
+}
+
+function deleteCardHandler(event) {
+  const currentCard = event.currentTarget.closest('.element');
+  currentCard.remove();
+}
+
+function openImageHandler(event) {
+  photoImage.src = event.currentTarget.src;
+  photoName.textContent = event.currentTarget.nextElementSibling.querySelector('.element__name').textContent;
+
+  popupToggle(popupPhoto);
+}
+
+//create cards and render default cards
+function createCard (card) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.cloneNode(true);
 
@@ -59,17 +56,17 @@ function addCard (card) {
   cardElement.querySelector('.element__trashbin').addEventListener('click', deleteCardHandler);
   cardElement.querySelector('.element__image').addEventListener('click', openImageHandler);
 
-  cards.prepend(cardElement);
+  return cardElement;
 };
 
-initialCards.forEach(card => {
-  addCard(card);
-});
-
-// toggle all popups
-function popupToggle(currentPopup) {
-  currentPopup.classList.toggle('popup_opened');
+function renderCards(startCards) {
+  startCards.forEach(card => {
+    cards.prepend(createCard(card))
+  });
 }
+
+renderCards(initialCards);
+
 
 // profile handlers
 function profileToggleHandler (event) {
@@ -91,18 +88,18 @@ function profileFormSubmitHandler (event) {
 }
 
 //cards handlers
-function AddCardToggleHandler (event) {
+function addCardToggleHandler (event) {
   popupToggle(popupAddCard);
 }
 
-function AddCardFormSubmitHandler (event) {
+function addCardFormSubmitHandler (event) {
   event.preventDefault();
 
-  card = {};
+  let card = {};
   card.name = cardNameInput.value;
   card.link = linkInput.value;
 
-  addCard(card);
+  cards.prepend(createCard(card));
 
   popupToggle(popupAddCard);
 
@@ -110,22 +107,7 @@ function AddCardFormSubmitHandler (event) {
   linkInput.value = '';
 }
 
-function likeButtonHandler(event){
-  event.currentTarget.classList.toggle('element__like-button_active');
-}
-
-function deleteCardHandler(event) {
-  const currentCard = event.currentTarget.closest('.element');
-  currentCard.remove();
-}
-
 // photo popup handlers
-function openImageHandler(event) {
-  photoImage.src = event.currentTarget.src;
-  photoName.textContent = event.currentTarget.nextElementSibling.firstElementChild.textContent;
-
-  popupToggle(popupPhoto);
-}
 
 function closeImageHandler(event) {
   popupToggle(popupPhoto);
@@ -138,10 +120,10 @@ popupProfileCloseButton.addEventListener('click', profileToggleHandler);
 popupProfileOverlay.addEventListener('click', profileToggleHandler);
 popupProfileForm.addEventListener('submit', profileFormSubmitHandler);
 // add card popup
-addCardButton.addEventListener('click', AddCardToggleHandler);
-popupAddCardCloseButton.addEventListener('click', AddCardToggleHandler);
-popupAddCardOverlay.addEventListener('click', AddCardToggleHandler);
-popupAddCardForm.addEventListener('submit', AddCardFormSubmitHandler);
+addCardButton.addEventListener('click', addCardToggleHandler);
+popupAddCardCloseButton.addEventListener('click', addCardToggleHandler);
+popupAddCardOverlay.addEventListener('click', addCardToggleHandler);
+popupAddCardForm.addEventListener('submit', addCardFormSubmitHandler);
 // photo popup
 popupPhotoCloseButton.addEventListener('click', closeImageHandler);
 popupPhotoOverlay.addEventListener('click', closeImageHandler);
