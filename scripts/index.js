@@ -85,9 +85,14 @@ function profileToggleHandler () {
   popupToggle(popupProfile);
 
   if (popupProfile.classList.contains('popup_opened')) {
+      const popupProfileButton = popupProfile.querySelector('.popup__save-button');
       nameInput.value = profileName.textContent;
       descriptionInput.value = profileDescription.textContent;
+      popupProfileButton.removeAttribute('disabled');
+      popupProfileButton.classList.remove('popup__save-button_disabled');
   }
+
+
 }
 
 function profileFormSubmitHandler (event) {
@@ -101,6 +106,11 @@ function profileFormSubmitHandler (event) {
 
 //cards handlers
 function addCardToggleHandler () {
+  const popupAddButton = popupAddCard.querySelector('.popup__save-button');
+  popupAddButton.setAttribute('disabled', 'true');
+  popupAddButton.classList.add('popup__save-button_disabled');
+  cardNameInput.value = '';
+  linkInput.value = '';
   popupToggle(popupAddCard);
 }
 
