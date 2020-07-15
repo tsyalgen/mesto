@@ -22,10 +22,20 @@ let linkInput = popupAddCardForm.querySelector('.popup__field_type_link');
 let photoImage = popupPhoto.querySelector('.popup__image');
 let photoName = popupPhoto.querySelector('.popup__name');
 
+function handleEscKey(event) {
+  if (document.querySelector('.popup_opened') && event.key === 'Escape') {
+    const activePopup = document.querySelector('.popup_opened');
+    activePopup.classList.remove('popup_opened');
+    document.removeEventListener('keyup', handleEscKey);
+  } else {
+    return;
+  }
+}
 
 // toggle all popups
 function popupToggle(currentPopup) {
   currentPopup.classList.toggle('popup_opened');
+  document.addEventListener('keyup', handleEscKey);
 }
 
 //functions for cardElement listeners
@@ -40,7 +50,7 @@ function deleteCardHandler(event) {
 
 function openImageHandler(event) {
   photoImage.src = event.currentTarget.src;
-  photoName.textContent = event.currentTarget.alt; //я понял, что Вы имели ввиду и у меня получилось сделать по Вашей рекомендации, но кажется, с появлением alt, я нашел более простое решение :D
+  photoName.textContent = event.currentTarget.alt;
   photoImage.alt = event.currentTarget.alt;
 
   popupToggle(popupPhoto);

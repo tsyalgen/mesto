@@ -36,10 +36,16 @@
 
           <div class="popup popup_type_profile">
             <div class="popup__overlay"></div>
-            <form name="form" method="POST" action="#" class="popup__form">
+            <form name="form" method="POST" action="#" class="popup__form" novalidate>
               <h2 class="popup__title">Редактировать профиль</h2>
-              <input type="text" value="" name="name" class="popup__field popup__field_type_name" required>
-              <input type="text" value="" name="description" class="popup__field popup__field_type_description" required>
+              <label class="popup__input-container">
+                <input type="text" value="" name="name" id="input-name" class="popup__field popup__field_type_name" minlength="2" maxlength="40" required>
+                <span id="input-name-error" class="popup__field-error">приветик</span>
+              </label>
+              <label class="popup__input-container">
+                <input type="text" value="" name="description" id="input-description" class="popup__field popup__field_type_description" minlength="2" maxlength="200" required>
+                <span id="input-description-error" class="popup__field-error">приветик</span>
+              </label>
               <button type="submit" class="popup__save-button">Сохранить</button>
               <button type="button" aria-label="закрытие попапа" class="popup__close-button transparence"></button>
             </form>
@@ -47,10 +53,16 @@
 
           <div class="popup popup_type_add-card">
             <div class="popup__overlay"></div>
-            <form name="form" method="POST" action="#" class="popup__form">
+            <form name="form" method="POST" action="#" class="popup__form" novalidate>
               <h2 class="popup__title">Новое место</h2>
-              <input type="text" value="" name="name" placeholder="Название" class="popup__field popup__field_type_card-name" required>
-              <input type="text" value="" name="link" placeholder="Ссылка на картинку" class="popup__field popup__field_type_link" required>
+              <label class="popup__input-container">
+                <input type="text" value="" name="title" placeholder="Название" id="input-title" class="popup__field popup__field_type_card-name" minlength="1" maxlength="30" required>
+                <span id="input-title-error" class="popup__field-error">приветик</span>
+              </label>
+              <label class="popup__input-container">
+                <input type="url" value="" name="link" placeholder="Ссылка на картинку" id="input-link" class="popup__field popup__field_type_link" required>
+                <span id="input-link-error" class="popup__field-error">как делишки</span>
+              </label>
               <button type="submit" class="popup__save-button">Создать</button>
               <button type="button" aria-label="закрытие попапа" class="popup__close-button transparence"></button>
             </form>
@@ -77,6 +89,7 @@
         </div>
       </template>
       <script src="./scripts/initialCards.js"></script>
+      <script src="./scripts/validate.js"></script>
       <script src="./scripts/index.js"></script>
   </body>
 </html>
