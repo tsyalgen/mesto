@@ -1,3 +1,12 @@
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__field',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__field_type_error',
+  errorIsVisibleClass: 'popup__field-error_visible'
+};
+
 function showInputError (formElement, inputElement, errorMessage, inputErrorClass, errorIsVisibleClass) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.add(inputErrorClass);
@@ -60,11 +69,4 @@ function enableValidation({formSelector, ...rest}) {
   });
 }
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__field',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_disabled',
-  inputErrorClass: 'popup__field_type_error',
-  errorIsVisibleClass: 'popup__field-error_visible'
-});
+enableValidation(validationConfig);
