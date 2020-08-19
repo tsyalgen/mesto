@@ -14,6 +14,7 @@
 * BEM
 * Время для сна одного ученика Яндекс.Практикума
 
+[Ссылка на gh](https://tsyalgen.github.io/mesto/) 
 
-[Ссылка на gh](https://tsyalgen.github.io/mesto/)
+Ветка gh-pages залита без вебпака, чтобы была возможность посмотреть. dev и master с вебпаком. 
 
