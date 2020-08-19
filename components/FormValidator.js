@@ -1,12 +1,6 @@
-const validationConfig = {
-  inputSelector: '.popup__field',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_disabled',
-  inputErrorClass: 'popup__field_type_error',
-  errorIsVisibleClass: 'popup__field-error_visible'
-};
+import {validationConfig} from '../utils/constants.js';
 
-class FormValidator {
+export default class FormValidator {
   constructor (config, formElement) {
     this._inputSelector = config.inputSelector;
     this._submitButtonSelector = config.submitButtonSelector;
@@ -24,6 +18,7 @@ class FormValidator {
 
   }
 
+
   _hideInputError (inputElement) {
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.remove(this._inputErrorClass);
@@ -39,6 +34,16 @@ class FormValidator {
     }
   }
 
+  disableButton (buttonElement) {
+    buttonElement.classList.add(this._inactiveButtonClass);
+    buttonElement.setAttribute('disabled', 'true');
+  }
+
+  enableButton (buttonElement) {
+    buttonElement.classList.remove(this._inactiveButtonClass);
+    buttonElement.removeAttribute('disabled');
+  }
+
 
   _hasInvalidInput (inputList) {
     return inputList.some((inputElement) => {
@@ -50,11 +55,9 @@ class FormValidator {
   _actualizeButtonState (inputList) {
     const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
     if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._inactiveButtonClass);
-      buttonElement.setAttribute('disabled', 'true');
+      this.disableButton(buttonElement);
     } else {
-      buttonElement.classList.remove(this._inactiveButtonClass);
-      buttonElement.removeAttribute('disabled');
+      this.enableButton(buttonElement);
     }
   }
 
@@ -79,6 +82,3 @@ class FormValidator {
     this.setEventListeners();
   }
 }
-
-
-export {validationConfig, FormValidator};

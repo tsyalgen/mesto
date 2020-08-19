@@ -56,7 +56,7 @@
             <form name="form" method="POST" action="#" class="popup__form popup__form_type_add-card" novalidate>
               <h2 class="popup__title">Новое место</h2>
               <label class="popup__input-container">
-                <input type="text" value="" name="title" placeholder="Название" id="input-title" class="popup__field popup__field_type_card-name" minlength="1" maxlength="30" required>
+                <input type="text" value="" name="name" placeholder="Название" id="input-title" class="popup__field popup__field_type_card-name" minlength="1" maxlength="30" required>
                 <span id="input-title-error" class="popup__field-error popup__field-error_type_card-name"></span>
               </label>
               <label class="popup__input-container">
@@ -88,12 +88,14 @@
           <button type="button" class="element__trashbin transparence"></button>
         </div>
       </template>
-      <script type="module" src="./scripts/utils.js"></script>
-      <script type="module" src="./scripts/initialCards.js"></script>
-      <script type="module" src="./scripts/Card.js"></script>
-      <script type="module" src="./scripts/FormValidator.js"></script>
-      <script type="module" src="./scripts/Section.js"></script>
-      <script type="module" src="./scripts/Popup.js"></script>
-      <script type="module" src="./scripts/index.js"></script>
+      <script type="module" src="./utils/constants.js"></script>
+      <script type="module" src="./components/Card.js"></script>
+      <script type="module" src="./components/FormValidator.js"></script>
+      <script type="module" src="./components/Section.js"></script>
+      <script type="module" src="./components/Popup.js"></script>
+      <script type="module" src="./components/PopupWithForm.js"></script>
+      <script type="module" src="./components/PopupWithImage.js"></script>
+      <script type="module" src="./components/UserInfo.js"></script>
+      <script type="module" src="./pages/index.js"></script>
   </body>
 </html>
