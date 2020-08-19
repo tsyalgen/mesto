@@ -1,17 +1,18 @@
-import {closePopup, openPopup} from './utils.js';
+// import {closePopup, openPopup} from './utils.js';
 
-const page = document.querySelector('.page');
-const popupPhoto = page.querySelector('.popup_type_photo');
-const photoImage = popupPhoto.querySelector('.popup__image');
-const photoName = popupPhoto.querySelector('.popup__name');
-const popupPhotoCloseButton = popupPhoto.querySelector('.popup__close-button');
-const popupPhotoOverlay = popupPhoto.querySelector('.popup__overlay');
+// const page = document.querySelector('.page');
+// const popupPhoto = page.querySelector('.popup_type_photo');
+// const photoImage = popupPhoto.querySelector('.popup__image');
+// const photoName = popupPhoto.querySelector('.popup__name');
+// const popupPhotoCloseButton = popupPhoto.querySelector('.popup__close-button');
+// const popupPhotoOverlay = popupPhoto.querySelector('.popup__overlay');
 
-class Card {
-  constructor(card, cardSelector) {
+export default class Card {
+  constructor(card, cardSelector, handleCardClick) {
     this._name = card.name;
     this._link = card.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -25,16 +26,12 @@ class Card {
   }
 
   _handleOpenImage () {
-    photoImage.src = this._link;
-    photoName.textContent = this._name;
-    photoImage.alt = this._name;
-
-    openPopup(popupPhoto);
+    this._handleCardClick(this._link, this._name);
   }
 
-  _handleCloseImage () {
-    closePopup(popupPhoto);
-  }
+  // _handleCloseImage () {
+  //   closePopup(popupPhoto);
+  // }
 
   _handleLikeButton () {
     this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
@@ -54,12 +51,12 @@ class Card {
     this._element.querySelector('.element__image').addEventListener('click', () =>{
       this._handleOpenImage();
     });
-    popupPhotoCloseButton.addEventListener('click', () => {
-      this._handleCloseImage();
-    });
-    popupPhotoOverlay.addEventListener('click', () => {
-      this._handleCloseImage();
-    });
+    // popupPhotoCloseButton.addEventListener('click', () => {
+    //   this._handleCloseImage();
+    // });
+    // popupPhotoOverlay.addEventListener('click', () => {
+    //   this._handleCloseImage();
+    // });
 
   }
 
@@ -74,5 +71,3 @@ class Card {
     return this._element;
   }
 }
-
-export {Card};
