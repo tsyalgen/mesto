@@ -13,7 +13,9 @@ import {
   addCardButton,
   cardListSelector,
   popupProfileForm,
-  popupAddCardForm
+  popupAddCardForm,
+  nameProfile,
+  descriptionProfile
 } from '../utils/constants.js';
 
 //validation
@@ -23,6 +25,13 @@ popupAddCardValidate.enableValidation();
 popupProfileValidate.enableValidation();
 
 //classes amd methods
+function newCardCreate (item, cardSelector) {
+  const newCard = new Card(item, cardSelector, handleCardClick);
+  const cardElement = newCard.generateCard();
+
+  defaultCardList.addItem(cardElement);
+}
+
 const popupImage = new PopupWithImage('.popup_type_photo');
 
 function handleCardClick (link, name) {
@@ -32,18 +41,12 @@ function handleCardClick (link, name) {
 const defaultCardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const newCard = new Card(item, '#card-template', handleCardClick);
-    const cardElement = newCard.generateCard();
-
-    defaultCardList.addItem(cardElement);
+    newCardCreate(item, '#card-template');
   }
 }, cardListSelector)
 
 const addCardPopup = new PopupWithForm('.popup_type_add-card', function(item) {
-  const newCard = new Card(item, '#card-template', handleCardClick);
-  const cardElement = newCard.generateCard();
-
-  defaultCardList.addItem(cardElement);
+  newCardCreate(item, '#card-template');
 });
 
 const userInfo = new UserInfo({ nameSelector: '.profile__name', descriptionSelector: '.profile__description' });
@@ -63,8 +66,6 @@ defaultCardList.renderItems();
 //listeners
 // profile edit listener
 profileEditButton.addEventListener('click', () => {
-  const nameProfile = document.querySelector('.popup__field_type_name');
-  const descriptionProfile = document.querySelector('.popup__field_type_description');
   const userData = userInfo.getUserInfo();
   nameProfile.value = userData.name;
   descriptionProfile.value = userData.description;

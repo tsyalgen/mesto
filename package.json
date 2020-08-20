@@ -4,7 +4,7 @@
   "description": "Тут можно:\r * Отредактировать свой профиль\r * Добавить любимые картинки с описанием\r * Лайкать понравившиеся картинки",
   "main": "index.js",
   "scripts": {
-    "build": "rd /s /q dist && webpack",
+    "build": "rimraf dist && webpack",
     "dev": "webpack-dev-server --open --watch"
   },
   "repository": {
