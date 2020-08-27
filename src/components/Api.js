@@ -19,6 +19,28 @@ export default class Api {
     });
   }
 
+  setUserinfo (userName, userDescription) {
+    return fetch(`${this._adress}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: `${userName}`,
+        about: `${userDescription}`
+      })
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
+
+
   initialCards () {
     return fetch(`${this._adress}/cards`, {
       headers: {
@@ -33,4 +55,6 @@ export default class Api {
       return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
+
+
 }

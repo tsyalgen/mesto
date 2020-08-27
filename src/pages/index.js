@@ -8,7 +8,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import {
-  initialCards,
+  initialCards, //ПОТОМ УБРАТЬ
   validationConfig,
   profileEditButton,
   addCardButton,
@@ -33,6 +33,8 @@ function newCardCreate (item, cardSelector) {
   return cardElement;
 }
 
+const userInfo = new UserInfo({ nameSelector: '.profile__name', descriptionSelector: '.profile__description', avatarSelector: '.profile__avatar' });
+
 const api = new Api('https://mesto.nomoreparties.co/v1/cohort-14', '2125977c-957d-44bb-839d-acd3b9623b61');
 
 api.getUserinfo()
@@ -45,7 +47,8 @@ api.getUserinfo()
     console.log(err);
   });
 
-  api.initialCards()
+
+api.initialCards()
   .then((res) => {
     const defaultCardList = new Section({
       items: res,
@@ -54,12 +57,30 @@ api.getUserinfo()
         defaultCardList.addItem(card);
       }
     }, cardListSelector)
+
+    const addCardPopup = new PopupWithForm('.popup_type_add-card', function(item) {
+      const card = newCardCreate(item, '#card-template');
+      defaultCardList.addItem(card);
+    });
+
+    addCardPopup.setEventListeners();
+
+
+    addCardButton.addEventListener('click', () => {
+      popupAddCardValidate.disableButton(popupAddCardForm.querySelector
+        (validationConfig.submitButtonSelector));
+
+      addCardPopup.open();
+    });
+
     return defaultCardList;
   })
   .then((defaultCardList) => {
     defaultCardList.renderItems();
+  })
+  .catch((err) => {
+    console.log(err);
   });
-
 
 const popupImage = new PopupWithImage('.popup_type_photo');
 
@@ -74,18 +95,20 @@ function handleCardClick (link, name) {
 //   }
 // }, cardListSelector)
 
-const addCardPopup = new PopupWithForm('.popup_type_add-card', function(item) {
-  newCardCreate(item, '#card-template');
-});
+// const addCardPopup = new PopupWithForm('.popup_type_add-card', function(item) {
+//   const card = newCardCreate(item, '#card-template');
+//   defaultCardList.addItem(card);
 
-const userInfo = new UserInfo({ nameSelector: '.profile__name', descriptionSelector: '.profile__description', avatarSelector: '.profile__avatar' });
+// });
+
 
 const profilePopup = new PopupWithForm('.popup_type_profile', function(item) {
   userInfo.setUserInfo({ name: item.name, description: item.description });
+  api.setUserinfo(item.name, item.description);
   });
 
 popupImage.setEventListeners();
-addCardPopup.setEventListeners();
+// addCardPopup.setEventListeners();
 profilePopup.setEventListeners();
 // defaultCardList.renderItems();
 
@@ -103,11 +126,11 @@ profileEditButton.addEventListener('click', () => {
   profilePopup.open();
 });
 // add card listener
-addCardButton.addEventListener('click', () => {
-  popupAddCardValidate.disableButton(popupAddCardForm.querySelector
-    (validationConfig.submitButtonSelector));
+// addCardButton.addEventListener('click', () => {
+//   popupAddCardValidate.disableButton(popupAddCardForm.querySelector
+//     (validationConfig.submitButtonSelector));
 
-  addCardPopup.open();
-});
+//   addCardPopup.open();
+// });
 
 
