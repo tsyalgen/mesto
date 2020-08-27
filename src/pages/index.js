@@ -60,6 +60,10 @@ api.initialCards()
 
     const addCardPopup = new PopupWithForm('.popup_type_add-card', function(item) {
       const card = newCardCreate(item, '#card-template');
+      api.addNewCard(item.name, item.link)
+      .catch((err) => {
+        console.log(err);
+      });
       defaultCardList.addItem(card);
     });
 
@@ -81,6 +85,8 @@ api.initialCards()
   .catch((err) => {
     console.log(err);
   });
+
+
 
 const popupImage = new PopupWithImage('.popup_type_photo');
 
@@ -104,7 +110,10 @@ function handleCardClick (link, name) {
 
 const profilePopup = new PopupWithForm('.popup_type_profile', function(item) {
   userInfo.setUserInfo({ name: item.name, description: item.description });
-  api.setUserinfo(item.name, item.description);
+  api.setUserinfo(item.name, item.description)
+  .catch((err) => {
+    console.log(err);
+  });
   });
 
 popupImage.setEventListeners();
