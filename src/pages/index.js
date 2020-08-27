@@ -6,6 +6,7 @@ import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 import {
   initialCards,
   validationConfig,
@@ -29,8 +30,36 @@ function newCardCreate (item, cardSelector) {
   const newCard = new Card(item, cardSelector, handleCardClick);
   const cardElement = newCard.generateCard();
 
-  defaultCardList.addItem(cardElement);
+  return cardElement;
 }
+
+const api = new Api('https://mesto.nomoreparties.co/v1/cohort-14', '2125977c-957d-44bb-839d-acd3b9623b61');
+
+api.getUserinfo()
+  .then((res) => {
+    userInfo.setUserInfo({
+      name: res.name, description: res.about, avatar: res.avatar
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+  api.initialCards()
+  .then((res) => {
+    const defaultCardList = new Section({
+      items: res,
+      renderer: (item) => {
+        const card = newCardCreate(item, '#card-template');
+        defaultCardList.addItem(card);
+      }
+    }, cardListSelector)
+    return defaultCardList;
+  })
+  .then((defaultCardList) => {
+    defaultCardList.renderItems();
+  });
+
 
 const popupImage = new PopupWithImage('.popup_type_photo');
 
@@ -38,29 +67,27 @@ function handleCardClick (link, name) {
   popupImage.open(link,name)
 }
 
-const defaultCardList = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    newCardCreate(item, '#card-template');
-  }
-}, cardListSelector)
+// const defaultCardList = new Section({
+//   items: initialCards,
+//   renderer: (item) => {
+//     newCardCreate(item, '#card-template');
+//   }
+// }, cardListSelector)
 
 const addCardPopup = new PopupWithForm('.popup_type_add-card', function(item) {
   newCardCreate(item, '#card-template');
 });
 
-const userInfo = new UserInfo({ nameSelector: '.profile__name', descriptionSelector: '.profile__description' });
+const userInfo = new UserInfo({ nameSelector: '.profile__name', descriptionSelector: '.profile__description', avatarSelector: '.profile__avatar' });
 
 const profilePopup = new PopupWithForm('.popup_type_profile', function(item) {
-  userInfo.setUserInfo(item.name, item.description);
+  userInfo.setUserInfo({ name: item.name, description: item.description });
   });
 
 popupImage.setEventListeners();
 addCardPopup.setEventListeners();
 profilePopup.setEventListeners();
-defaultCardList.renderItems();
-
-
+// defaultCardList.renderItems();
 
 
 //listeners
