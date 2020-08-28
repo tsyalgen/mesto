@@ -22,5 +22,6 @@ export const avatarProfile = document.querySelector('.popup__field_type_avatar')
 export const descriptionProfile = document.querySelector('.popup__field_type_description');
 export const elLikeButton = '.element__like-button';
 export const elImage = '.element__image';
+export const saveButton = '.popup__save-button';
 export const popupOpened = 'popup_opened';
 export const myId = '69586251800ec0627792e91b';

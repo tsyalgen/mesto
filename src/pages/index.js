@@ -20,7 +20,8 @@ import {
   nameProfile,
   descriptionProfile,
   avatarProfile,
-  elLikeButton
+  elLikeButton,
+  saveButton
 } from '../utils/constants.js';
 
 //validation
@@ -32,28 +33,61 @@ popupProfileValidate.enableValidation();
 popupAvatarValidate.enableValidation();
 
 
+
 const api = new Api('https://mesto.nomoreparties.co/v1/cohort-14', '2125977c-957d-44bb-839d-acd3b9623b61');
 
 api.loadAllData()
 .then((res) => {
   const [ info, cards ] = res;
 
+  function findButton () {
+    const activePopup = document.querySelector('.popup_opened');
+    const submitButton = activePopup.querySelector(saveButton);
+    return submitButton;
+  }
+
+  function renderLoading (isLoading, { pV, sB }) {
+    if (isLoading) {
+      sB.textContent = 'Сохранение...'
+    } else {
+      sB.textContent = pV;
+    }
+  }
+
+
+
+//userInfo part
   const userInfo = new UserInfo({ nameSelector: '.profile__name', descriptionSelector: '.profile__description', avatarSelector: '.profile__avatar' });
 
     const profilePopup = new PopupWithForm('.popup_type_profile', function(item) {
+      const submitButton = findButton();
+      const previousValue = submitButton.textContent;
+      renderLoading(true, { sB: submitButton });
+
       userInfo.setUserInfo({ name: item.name, description: item.description });
       api.setUserinfo(item.name, item.description)
       .catch((err) => {
         console.log(err);
+      })
+      .finally( () => {
+        renderLoading(false, {pV: previousValue, sB: submitButton });
+        profilePopup.close();
       });
     });
 
     const avatarPopup = new PopupWithForm('.popup_type_avatar', function(item) {
+      const submitButton = findButton();
+      const previousValue = submitButton.textContent;
+      renderLoading(true, { sB: submitButton });
+
       userInfo.setUserInfo({ avatar: item.link });
-      console.log(item.link);
       api.changeAvatar(item.link)
       .catch((err) => {
         console.log(err);
+      })
+      .finally( () => {
+        renderLoading(false, {pV: previousValue, sB: submitButton });
+        avatarPopup.close();
       });
     });
 
@@ -86,7 +120,7 @@ api.loadAllData()
       name: info.name, description: info.about, avatar: info.avatar
     });
 
-
+//cards part
     const popupImage = new PopupWithImage('.popup_type_photo');
 
     function handleCardClick (link, name) {
@@ -94,7 +128,6 @@ api.loadAllData()
     }
 
     const deleteCardPopup = new PopupWithSubmit('.popup_type_delete-card');
-    deleteCardPopup.setEventListeners();
 
 
     function handleTrashbinClick (card, id) {
@@ -151,6 +184,10 @@ api.loadAllData()
     }, cardListSelector)
 
     const addCardPopup = new PopupWithForm('.popup_type_add-card', function(item) {
+      const submitButton = findButton();
+      const previousValue = submitButton.textContent;
+      renderLoading(true, { sB: submitButton });
+
       api.addNewCard(item.name, item.link)
       .then((res) => {
         const card = newCardCreate(res, '#card-template');
@@ -161,13 +198,12 @@ api.loadAllData()
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally( () => {
+        renderLoading(false, {pV: previousValue, sB: submitButton });
+        addCardPopup.close();
       });
     });
-
-
-    addCardPopup.setEventListeners();
-    popupImage.setEventListeners();
-
 
     addCardButton.addEventListener('click', () => {
       popupAddCardValidate.disableButton(popupAddCardForm.querySelector
@@ -175,6 +211,12 @@ api.loadAllData()
 
       addCardPopup.open();
     });
+
+
+    addCardPopup.setEventListeners();
+    popupImage.setEventListeners();
+    deleteCardPopup.setEventListeners();
+
 
     return defaultCardList;
   })
