@@ -110,7 +110,6 @@ export default class Api {
       return Promise.reject(`Ошибка: ${res.status}`);
     })
     .then((res) => {
-      console.log(res.likes)
       return res.likes.length
     });
   }
@@ -131,9 +130,35 @@ export default class Api {
       return Promise.reject(`Ошибка: ${res.status}`);
     })
     .then((res) => {
-      console.log(res.likes.length)
       return res.likes.length
     });
   }
 
+  changeAvatar (url) {
+    return fetch(`${this._adress}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: `${url}`
+      })
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .then((res) => {
+      return res.avatar;
+    });
   }
+
+  loadAllData() {
+    return Promise.all([this.getUserinfo(), this.initialCards()]);
+  }
+
+}

@@ -1,3 +1,4 @@
+@import url('./__button-avatar/profile__button-avatar.css');
 @import url('./__avatar/profile__avatar.css');
 @import url('./__info/profile__info.css');
 @import url('./__string/profile__string.css');
@@ -8,6 +9,7 @@
 
 .profile {
     display: flex;
+    position: relative;
     align-items: center;
     width: 74%;
     max-width: 882px;
