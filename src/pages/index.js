@@ -16,7 +16,9 @@ import {
   popupProfileForm,
   popupAddCardForm,
   nameProfile,
-  descriptionProfile
+  descriptionProfile,
+  elLikeButton,
+  myId
 } from '../utils/constants.js';
 
 //validation
@@ -72,28 +74,39 @@ api.initialCards()
       popupImage.open(link,name)
     }
 
+    const deleteCardPopup = new PopupWithSubmit('.popup_type_delete-card');
+    deleteCardPopup.setEventListeners();
+
 
     function handleTrashbinClick (card, id) {
-      const deleteCardPopup = new PopupWithSubmit ('.popup_type_delete-card', function() {
-        if (id) {
+      deleteCardPopup.setSubmitAction(() => {
         api.deleteCard(id)
+        .then((res) => {
+        card.remove()
+        deleteCardPopup.close();
+        })
         .catch((err) => {
           console.log(err);
-        })};
-        id = '';
-        card.remove();
-      })
-      deleteCardPopup.setEventListeners();
+        });
+      });
       deleteCardPopup.open();
+    }
+
+    function handleLikeClick (card, id) {
+      const counter = card.querySelector('.element__like-counter');
+      card.querySelector(elLikeButton).classList.toggle('element__like-button_active');
+      if (id) {
+        api.addLike(id)
+        .then((res) => {
+          counter.textContent = res;
+        });
+      }
     }
 
 
     function newCardCreate (item, cardSelector) {
-      const newCard = new Card(item, cardSelector, handleCardClick, handleTrashbinClick);
+      const newCard = new Card(item, cardSelector, handleCardClick, handleTrashbinClick, handleLikeClick);
       const cardElement = newCard.generateCard();
-      if (item.owner && item.owner._id !== '69586251800ec0627792e91b') {
-        cardElement.querySelector('.element__trashbin').remove();
-      }
 
       return cardElement;
     }
@@ -107,12 +120,19 @@ api.initialCards()
     }, cardListSelector)
 
     const addCardPopup = new PopupWithForm('.popup_type_add-card', function(item) {
-      const card = newCardCreate(item, '#card-template');
+      // const card = newCardCreate(item, '#card-template');
       api.addNewCard(item.name, item.link)
+      .then((res) => {
+        const card = newCardCreate(res, '#card-template');
+        return card;
+      })
+      .then((card) => {
+        defaultCardList.addItem(card);
+      })
       .catch((err) => {
         console.log(err);
       });
-      defaultCardList.addItem(card);
+      // defaultCardList.addItem(card);
     });
 
 
@@ -135,3 +155,5 @@ api.initialCards()
   .catch((err) => {
     console.log(err);
   });
+
+  api.deleteLike('5f489f52f17241001f7b3922');
