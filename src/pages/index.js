@@ -67,12 +67,14 @@ api.loadAllData()
 
       userInfo.setUserInfo({ name: item.name, description: item.description });
       api.setUserinfo(item.name, item.description)
+      .then(() => {
+        profilePopup.close()
+      })
       .catch((err) => {
         console.log(err);
       })
       .finally( () => {
         renderLoading(false, {pV: previousValue, sB: submitButton });
-        profilePopup.close();
       });
     });
 
@@ -81,14 +83,16 @@ api.loadAllData()
       const previousValue = submitButton.textContent;
       renderLoading(true, { sB: submitButton });
 
-      userInfo.setUserInfo({ avatar: item.link });
-      api.changeAvatar(item.link)
+      userInfo.setUserInfo({ avatar: item.avatar });
+      api.changeAvatar(item.avatar)
+      .then(() => {
+        avatarPopup.close()
+      })
       .catch((err) => {
         console.log(err);
       })
       .finally( () => {
         renderLoading(false, {pV: previousValue, sB: submitButton });
-        avatarPopup.close();
       });
     });
 
@@ -197,12 +201,14 @@ api.loadAllData()
       .then((card) => {
         defaultCardList.addItem(card);
       })
+      .then(() => {
+        addCardPopup.close()
+      })
       .catch((err) => {
         console.log(err);
       })
       .finally( () => {
         renderLoading(false, {pV: previousValue, sB: submitButton });
-        addCardPopup.close();
       });
     });
 
