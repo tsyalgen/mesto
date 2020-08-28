@@ -67,6 +67,15 @@
             </form>
           </div>
 
+          <div class="popup popup_type_delete-card">
+            <div class="popup__overlay"></div>
+            <form name="form" method="POST" action="#" class="popup__form popup__form_type_delete-card">
+              <h2 class="popup__title">Вы уверены?</h2>
+              <button type="submit" class="popup__save-button">Да</button>
+              <button type="button" aria-label="закрытие попапа" class="popup__close-button transparence"></button>
+            </form>
+          </div>
+
           <div class="popup popup_type_photo">
             <div class="popup__overlay"></div>
             <div class="popup__container">
@@ -82,7 +91,10 @@
           <img src="#" alt="" class="element__image">
           <div class="element__string">
             <h2 class="element__name"></h2>
-            <button type="button" class="element__like-button transparence"></button>
+            <div class="element_likes">
+              <button type="button" class="element__like-button transparence"></button>
+              <p class="element__like-counter">0</p>
+            </div>
           </div>
           <button type="button" class="element__trashbin transparence"></button>
         </div>

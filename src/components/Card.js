@@ -4,11 +4,14 @@ import {
 } from '../utils/constants.js';
 
 export default class Card {
-  constructor(card, cardSelector, handleCardClick) {
+  constructor(card, cardSelector, handleCardClick, handleTrashbinClick) {
     this._name = card.name;
     this._link = card.link;
+    this._likes = card.likes;
+    this._id = card._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleTrashbinClick = handleTrashbinClick;
   }
 
   _getTemplate() {
@@ -21,16 +24,8 @@ export default class Card {
     return cardElement;
   }
 
-  _handleOpenImage () {
-    this._handleCardClick(this._link, this._name);
-  }
-
   _handleLikeButton () {
     this._element.querySelector(elLikeButton).classList.toggle('element__like-button_active');
-  }
-
-  _handleDeleteCard () {
-    this._element.remove();
   }
 
   _setEventListeners () {
@@ -38,10 +33,10 @@ export default class Card {
       this._handleLikeButton();
     });
     this._element.querySelector('.element__trashbin').addEventListener('click', () =>{
-      this._handleDeleteCard();
+      this._handleTrashbinClick(this._element, this._id);
     });
     this._element.querySelector(elImage).addEventListener('click', () =>{
-      this._handleOpenImage();
+      this._handleCardClick(this._link, this._name);
     });
   }
 
@@ -52,6 +47,10 @@ export default class Card {
     this._element.querySelector('.element__name').textContent = this._name;
     this._element.querySelector(elImage).src = this._link;
     this._element.querySelector(elImage).alt = this._name;
+    if (this._likes) {
+    this._element.querySelector('.element__like-counter').textContent = this._likes.length;
+    }
+
 
     return this._element;
   }
