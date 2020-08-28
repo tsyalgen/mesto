@@ -40,6 +40,7 @@ api.loadAllData()
 .then((res) => {
   const [ info, cards ] = res;
 
+//preloader
   function findButton () {
     const activePopup = document.querySelector('.popup_opened');
     const submitButton = activePopup.querySelector(saveButton);
