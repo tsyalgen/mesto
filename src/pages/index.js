@@ -65,9 +65,9 @@ api.loadAllData()
       const previousValue = submitButton.textContent;
       renderLoading(true, { sB: submitButton });
 
-      userInfo.setUserInfo({ name: item.name, description: item.description });
       api.setUserinfo(item.name, item.description)
       .then(() => {
+        userInfo.setUserInfo({ name: item.name, description: item.description });
         profilePopup.close()
       })
       .catch((err) => {
@@ -76,6 +76,7 @@ api.loadAllData()
       .finally( () => {
         renderLoading(false, {pV: previousValue, sB: submitButton });
       });
+
     });
 
     const avatarPopup = new PopupWithForm('.popup_type_avatar', function(item) {
@@ -196,12 +197,9 @@ api.loadAllData()
       api.addNewCard(item.name, item.link)
       .then((res) => {
         const card = newCardCreate(res, '#card-template');
-        return card;
-      })
-      .then((card) => {
+
         defaultCardList.addItem(card);
-      })
-      .then(() => {
+
         addCardPopup.close()
       })
       .catch((err) => {
