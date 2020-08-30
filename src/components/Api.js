@@ -4,13 +4,12 @@ export default class Api {
     this._token = token;
   }
 
-  getUserinfo () {
+  getUserinfo() {
     return fetch(`${this._adress}/users/me`, {
       headers: {
-        authorization: this._token
-      }
-    })
-    .then((res) => {
+        authorization: this._token,
+      },
+    }).then((res) => {
       if (res.ok) {
         return res.json();
       }
@@ -19,19 +18,18 @@ export default class Api {
     });
   }
 
-  setUserinfo (userName, userDescription) {
+  setUserinfo(userName, userDescription) {
     return fetch(`${this._adress}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: this._token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name: `${userName}`,
-        about: `${userDescription}`
-      })
-    })
-    .then((res) => {
+        about: `${userDescription}`,
+      }),
+    }).then((res) => {
       if (res.ok) {
         return res.json();
       }
@@ -40,14 +38,12 @@ export default class Api {
     });
   }
 
-
-  initialCards () {
+  initialCards() {
     return fetch(`${this._adress}/cards`, {
       headers: {
-        authorization: this._token
-      }
-    })
-    .then((res) => {
+        authorization: this._token,
+      },
+    }).then((res) => {
       if (res.ok) {
         return res.json();
       }
@@ -56,19 +52,18 @@ export default class Api {
     });
   }
 
-  addNewCard (cardName, cardLink) {
+  addNewCard(cardName, cardLink) {
     return fetch(`${this._adress}/cards`, {
       method: 'POST',
       headers: {
         authorization: this._token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name: `${cardName}`,
-        link: `${cardLink}`
-      })
-    })
-    .then((res) => {
+        link: `${cardLink}`,
+      }),
+    }).then((res) => {
       if (res.ok) {
         return res.json();
       }
@@ -77,15 +72,14 @@ export default class Api {
     });
   }
 
-  deleteCard (cardId) {
+  deleteCard(cardId) {
     return fetch(`${this._adress}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._token,
-        'Content-Type': 'application/json'
-      }
-    })
-    .then((res) => {
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => {
       if (res.ok) {
         return res.json();
       }
@@ -94,71 +88,70 @@ export default class Api {
     });
   }
 
-  addLike (cardId) {
+  addLike(cardId) {
     return fetch(`${this._adress}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: {
         authorization: this._token,
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
 
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then((res) => {
-      return res.likes.length
-    });
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then((res) => {
+        return res.likes.length;
+      });
   }
 
-  deleteLike (cardId) {
+  deleteLike(cardId) {
     return fetch(`${this._adress}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._token,
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
 
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then((res) => {
-      return res.likes.length
-    });
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then((res) => {
+        return res.likes.length;
+      });
   }
 
-  changeAvatar (url) {
+  changeAvatar(url) {
     return fetch(`${this._adress}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
         authorization: this._token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        avatar: `${url}`
-      })
+        avatar: `${url}`,
+      }),
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
 
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then((res) => {
-      return res.avatar;
-    });
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then((res) => {
+        return res.avatar;
+      });
   }
 
   loadAllData() {
     return Promise.all([this.getUserinfo(), this.initialCards()]);
   }
-
 }

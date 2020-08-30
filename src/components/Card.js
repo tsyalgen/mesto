@@ -1,11 +1,13 @@
-import {
-  elLikeButton,
-  elImage,
-  myId
-} from '../utils/constants.js';
+import { elLikeButton, elImage, myId } from '../utils/constants.js';
 
 export default class Card {
-  constructor(card, cardSelector, handleCardClick, handleTrashbinClick, handleLikeClick) {
+  constructor(
+    card,
+    cardSelector,
+    handleCardClick,
+    handleTrashbinClick,
+    handleLikeClick
+  ) {
     this._name = card.name;
     this._link = card.link;
     this._likes = card.likes;
@@ -19,27 +21,28 @@ export default class Card {
 
   _getTemplate() {
     const cardElement = document
-    .querySelector(this._cardSelector)
-    .content
-    .querySelector('.element')
-    .cloneNode(true);
+      .querySelector(this._cardSelector)
+      .content.querySelector('.element')
+      .cloneNode(true);
 
     return cardElement;
   }
 
-  _setEventListeners () {
-    this._element.querySelector(elLikeButton).addEventListener('click', () =>{
+  _setEventListeners() {
+    this._element.querySelector(elLikeButton).addEventListener('click', () => {
       this._handleLikeClick(this._element, this._id);
     });
-    this._element.querySelector('.element__trashbin').addEventListener('click', () =>{
-      this._handleTrashbinClick(this._element, this._id);
-    });
-    this._element.querySelector(elImage).addEventListener('click', () =>{
+    this._element
+      .querySelector('.element__trashbin')
+      .addEventListener('click', () => {
+        this._handleTrashbinClick(this._element, this._id);
+      });
+    this._element.querySelector(elImage).addEventListener('click', () => {
       this._handleCardClick(this._link, this._name);
     });
   }
 
-  generateCard () {
+  generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
 
@@ -52,15 +55,18 @@ export default class Card {
     }
 
     if (this._likes) {
-      this._element.querySelector('.element__like-counter').textContent = this._likes.length;
+      this._element.querySelector(
+        '.element__like-counter'
+      ).textContent = this._likes.length;
 
-    this._likes.forEach(elem => {
-      if (elem._id === myId) {
-        this._element.querySelector(elLikeButton).classList.add('element__like-button_active');
-      }
-    });
-  }
-
+      this._likes.forEach((elem) => {
+        if (elem._id === myId) {
+          this._element
+            .querySelector(elLikeButton)
+            .classList.add('element__like-button_active');
+        }
+      });
+    }
 
     return this._element;
   }

@@ -8,7 +8,7 @@ export default class UserInfo {
     this._userAvatar = document.querySelector(this._avatarSelector);
   }
 
-  getUserInfo () {
+  getUserInfo() {
     this._userInfo = {};
     this._userInfo.name = this._userName.textContent;
     this._userInfo.description = this._userDescription.textContent;
@@ -17,12 +17,12 @@ export default class UserInfo {
     return this._userInfo;
   }
 
-  setUserInfo ({ name, description, avatar }) {
+  setUserInfo({ name, description, avatar }) {
     if (name) {
-    this._userName.textContent = name;
+      this._userName.textContent = name;
     }
     if (description) {
-    this._userDescription.textContent = description;
+      this._userDescription.textContent = description;
     }
     if (avatar) {
       this._userAvatar.src = avatar;
