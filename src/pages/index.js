@@ -266,3 +266,6 @@ api
   .catch((err) => {
     console.log(err);
   });
+
+
+  api.setUserinfo('приветики', 'пистолетики');

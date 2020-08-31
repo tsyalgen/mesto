@@ -16,4 +16,4 @@
 * Webpack
 * Время для сна одного ученика Яндекс.Практикума
 
-[Ссылка на gh](https://tsyalgen.github.io/mesto/) (пока не актуально)
+[Ссылка на gh](https://tsyalgen.github.io/mesto/)
